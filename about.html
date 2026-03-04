@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("vibe-theme");
+        if (stored === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
+  </script>
+  <title>My Vibe App — About</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class"
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', Arial, Helvetica, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-200 via-sky-100 to-purple-200 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 dark:text-slate-100" data-page="about">
+  <div id="nav-placeholder"></div>
+
+  <main class="mx-auto flex max-w-5xl flex-col items-center px-5 py-14">
+    <section class="w-full rounded-3xl border border-white/30 bg-white/60 p-10 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-5 flex items-center gap-3">
+          <div class="text-3xl">✨</div>
+          <h1 class="text-4xl font-black tracking-tight sm:text-5xl">About</h1>
+        </div>
+
+        <p class="text-base leading-relaxed text-slate-700 dark:text-slate-200/80 sm:text-lg">
+          Этот сайт создан с помощью <span class="font-semibold text-slate-900 dark:text-white">вайбкодинга</span> — когда ты ловишь правильный поток,
+          быстро собираешь идею в работающий результат и улучшаешь её итерациями.
+        </p>
+
+        <div class="mt-7 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-white/30 bg-white/50 p-5 dark:border-white/10 dark:bg-white/5">
+            <div class="text-sm font-semibold">Идея</div>
+            <div class="mt-1 text-sm text-slate-700 dark:text-slate-200/80">
+              Мини‑сайт с двумя страницами, общим стилем и переключателем темы.
+            </div>
+          </div>
+          <div class="rounded-2xl border border-white/30 bg-white/50 p-5 dark:border-white/10 dark:bg-white/5">
+            <div class="text-sm font-semibold">Технологии</div>
+            <div class="mt-1 text-sm text-slate-700 dark:text-slate-200/80">
+              Tailwind CSS (CDN), немного JavaScript и сохранение темы в браузере.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./theme-loader.js"></script>
+</body>
+</html>
+

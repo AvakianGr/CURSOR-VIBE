@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("vibe-theme");
+        if (stored === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
+  </script>
+  <title>My Vibe App — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class"
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', Arial, Helvetica, sans-serif;
+    }
+
+    @keyframes popFadeIn {
+      0% { opacity: 0; transform: translateY(10px) scale(0.96); filter: blur(2px); }
+      60% { opacity: 1; transform: translateY(0) scale(1.02); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    .btn-text-animate {
+      display: inline-block;
+      animation: popFadeIn 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      will-change: transform, opacity, filter;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn-text-animate { animation: none; }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-200 via-sky-100 to-purple-200 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 dark:text-slate-100" data-page="home">
+  <div id="nav-placeholder"></div>
+
+  <main class="mx-auto flex max-w-5xl flex-col items-center px-5 py-14">
+    <section class="w-full rounded-3xl border border-white/30 bg-white/60 p-10 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
+      <div class="flex flex-col items-center text-center">
+        <div class="mb-4 text-5xl">🚀</div>
+        <h1 class="text-4xl font-black tracking-tight sm:text-5xl">Главная</h1>
+        <p class="mt-4 max-w-2xl text-base text-slate-700 dark:text-slate-200/80 sm:text-lg">
+          Это мини‑сайт на Tailwind CSS. Нажми кнопку ниже — и вдохновляйся программированием.
+        </p>
+
+        <section class="mt-8 w-full max-w-2xl text-left">
+          <div class="rounded-3xl border border-white/40 bg-white/70 p-5 text-left shadow-md shadow-indigo-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-200">
+              <span class="text-sm">✨</span>
+              <span>Вдохновение дня</span>
+            </div>
+            <p id="inspoText" class="text-base italic text-slate-800 dark:text-slate-100">
+              Загружаем свежую цитату...
+            </p>
+            <p id="inspoAuthor" class="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400"></p>
+            <div class="mt-4 flex items-center justify-between gap-3">
+              <span id="inspoStatus" class="text-xs text-slate-400 dark:text-slate-500"></span>
+              <button id="inspoRefreshBtn" type="button" class="inline-flex items-center gap-1 rounded-2xl border border-indigo-500/30 bg-white/70 px-3 py-1.5 text-xs font-semibold text-indigo-700 shadow-sm transition hover:border-indigo-500 hover:bg-white dark:border-indigo-400/40 dark:bg-slate-900/80 dark:text-indigo-200 dark:hover:bg-slate-900">
+                <span class="text-sm">🔄</span>
+                <span>Обновить цитату</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="mt-8">
+          <button id="learnMoreBtn" class="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:from-purple-700 hover:to-indigo-500 active:scale-[0.99] dark:shadow-purple-900/30">
+            <span id="learnMoreText">Узнать больше</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const phrases = [
+        "Пиши код — и он начнёт писать твою историю.",
+        "Маленькие коммиты ведут к большим победам.",
+        "Ошибки — это фичи на пути к мастерству.",
+        "Сначала работает — потом красиво. Но сделай и то, и другое.",
+        "Сегодня рефакторинг — завтра скорость и ясность.",
+        "Каждая строка кода приближает к версии 1.0."
+      ];
+
+      const btn = document.getElementById("learnMoreBtn");
+      const textEl = document.getElementById("learnMoreText");
+      const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+      const inspoText = document.getElementById("inspoText");
+      const inspoAuthor = document.getElementById("inspoAuthor");
+      const inspoStatus = document.getElementById("inspoStatus");
+      const inspoRefreshBtn = document.getElementById("inspoRefreshBtn");
+
+      function pickRandomPhrase(exclude) {
+        if (phrases.length <= 1) return phrases[0] ?? "";
+        let next = exclude;
+        while (next === exclude) {
+          next = phrases[Math.floor(Math.random() * phrases.length)];
+        }
+        return next;
+      }
+
+      function animateText() {
+        if (prefersReducedMotion || !textEl) return;
+        textEl.classList.remove("btn-text-animate");
+        void textEl.offsetWidth;
+        textEl.classList.add("btn-text-animate");
+      }
+
+      async function fetchQuote() {
+        if (!inspoText) return;
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        const fallback =
+          "Программирование — это не то, что ты знаешь, а то, что ты можешь выяснить";
+
+        if (inspoStatus) {
+          inspoStatus.textContent = "Обновляем цитату...";
+        }
+        if (inspoRefreshBtn) {
+          inspoRefreshBtn.disabled = true;
+          inspoRefreshBtn.classList.add("opacity-60", "cursor-not-allowed");
+        }
+
+        try {
+          const timeoutId = setTimeout(() => controller.abort(), 8000);
+          const res = await fetch("https://api.adviceslip.com/advice", {
+            signal,
+            cache: "no-cache"
+          });
+          clearTimeout(timeoutId);
+
+          if (!res.ok) {
+            throw new Error("Failed to load advice");
+          }
+
+          const data = await res.json();
+          const content =
+            (data && data.slip && data.slip.advice) || fallback;
+
+          inspoText.textContent = `“${content}”`;
+          if (inspoAuthor) {
+            inspoAuthor.textContent = "";
+          }
+          if (inspoStatus) inspoStatus.textContent = "";
+        } catch (e) {
+          inspoText.textContent = `“${fallback}”`;
+          if (inspoAuthor) inspoAuthor.textContent = "";
+          if (inspoStatus) inspoStatus.textContent = "Не удалось загрузить цитату из сети.";
+        } finally {
+          if (inspoRefreshBtn) {
+            inspoRefreshBtn.disabled = false;
+            inspoRefreshBtn.classList.remove("opacity-60", "cursor-not-allowed");
+          }
+        }
+      }
+
+      btn?.addEventListener("click", () => {
+        const current = textEl?.textContent?.trim() ?? "";
+        const next = pickRandomPhrase(current);
+        if (textEl) textEl.textContent = next;
+        animateText();
+      });
+
+      if (inspoRefreshBtn) {
+        inspoRefreshBtn.addEventListener("click", () => {
+          fetchQuote();
+        });
+      }
+
+      // загрузим цитату при первом открытии страницы
+      fetchQuote();
+    })();
+  </script>
+  <script src="./theme-loader.js"></script>
+</body>
+</html>
