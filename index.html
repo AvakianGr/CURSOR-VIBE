@@ -46,6 +46,23 @@
     @media (prefers-reduced-motion: reduce) {
       .btn-text-animate { animation: none; }
     }
+
+    @keyframes cardFlash {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+      35% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.18); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .card-flash {
+      animation: cardFlash 520ms ease-out;
+      will-change: box-shadow;
+    }
+
+    .quest-animate {
+      display: inline-block;
+      animation: popFadeIn 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      will-change: transform, opacity, filter;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-indigo-200 via-sky-100 to-purple-200 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 dark:text-slate-100" data-page="home">
@@ -60,22 +77,107 @@
           Это мини‑сайт на Tailwind CSS. Нажми кнопку ниже — и вдохновляйся программированием.
         </p>
 
-        <section class="mt-8 w-full max-w-2xl text-left">
-          <div class="rounded-3xl border border-white/40 bg-white/70 p-5 text-left shadow-md shadow-indigo-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
-            <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-200">
-              <span class="text-sm">✨</span>
-              <span>Вдохновение дня</span>
+        <section class="mt-8 w-full max-w-3xl text-left">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div class="rounded-3xl border border-white/40 bg-white/70 p-5 text-left shadow-md shadow-indigo-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
+              <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-200">
+                <span class="text-sm">✨</span>
+                <span>Вдохновение дня</span>
+              </div>
+              <p id="inspoText" class="text-base italic text-slate-800 dark:text-slate-100">
+                Загружаем свежую цитату...
+              </p>
+              <p id="inspoAuthor" class="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400"></p>
+              <div class="mt-4 flex items-center justify-between gap-3">
+                <span id="inspoStatus" class="text-xs text-slate-400 dark:text-slate-500"></span>
+                <button id="inspoRefreshBtn" type="button" class="inline-flex items-center gap-1 rounded-2xl border border-indigo-500/30 bg-white/70 px-3 py-1.5 text-xs font-semibold text-indigo-700 shadow-sm transition hover:border-indigo-500 hover:bg-white dark:border-indigo-400/40 dark:bg-slate-900/80 dark:text-indigo-200 dark:hover:bg-slate-900">
+                  <span class="text-sm">🔄</span>
+                  <span>Обновить цитату</span>
+                </button>
+              </div>
             </div>
-            <p id="inspoText" class="text-base italic text-slate-800 dark:text-slate-100">
-              Загружаем свежую цитату...
-            </p>
-            <p id="inspoAuthor" class="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400"></p>
-            <div class="mt-4 flex items-center justify-between gap-3">
-              <span id="inspoStatus" class="text-xs text-slate-400 dark:text-slate-500"></span>
-              <button id="inspoRefreshBtn" type="button" class="inline-flex items-center gap-1 rounded-2xl border border-indigo-500/30 bg-white/70 px-3 py-1.5 text-xs font-semibold text-indigo-700 shadow-sm transition hover:border-indigo-500 hover:bg-white dark:border-indigo-400/40 dark:bg-slate-900/80 dark:text-indigo-200 dark:hover:bg-slate-900">
-                <span class="text-sm">🔄</span>
-                <span>Обновить цитату</span>
-              </button>
+
+            <div class="grid gap-4">
+              <div class="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-md shadow-sky-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
+                <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-sky-700 dark:bg-sky-500/15 dark:text-sky-200">
+                  <span class="text-sm">☁️</span>
+                  <span>Weather widget</span>
+                </div>
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-500 text-2xl text-white dark:from-sky-500 dark:to-indigo-600">
+                      <!-- Иконка погоды -->
+                      <span id="weatherIcon">⛅</span>
+                    </div>
+                    <div>
+                      <div class="text-2xl font-bold text-slate-900 dark:text-slate-50">
+                        <!-- Температура -->
+                        <span id="weatherTemp">—°C</span>
+                      </div>
+                      <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                        Сейчас за окном
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-sm font-semibold text-slate-800 dark:text-slate-100">
+                      <!-- Город -->
+                      <span id="weatherCity">Город</span>
+                    </div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">
+                      <span id="weatherCode">Код погоды —</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between gap-3">
+                  <span id="weatherStatus" class="text-xs text-slate-400 dark:text-slate-500"></span>
+                  <button id="weatherBtn" type="button" class="inline-flex items-center gap-1 rounded-2xl border border-sky-500/40 bg-white/70 px-3 py-1.5 text-xs font-semibold text-sky-700 shadow-sm transition hover:border-sky-500 hover:bg-white dark:border-sky-400/40 dark:bg-slate-900/80 dark:text-sky-200 dark:hover:bg-slate-900">
+                    <span class="text-sm">📍</span>
+                    <span>Узнать погоду</span>
+                  </button>
+                </div>
+              </div>
+
+              <div id="cryptoCard" class="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-md shadow-emerald-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
+                <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200">
+                  <span class="text-sm">₿</span>
+                  <span>Crypto tracker</span>
+                </div>
+                <div class="flex items-end justify-between gap-3">
+                  <div>
+                    <div id="cryptoPrice" class="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-50">
+                      BTC: —
+                    </div>
+                    <div class="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                      Обновление каждые 30 секунд
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div id="cryptoStatus" class="text-xs text-slate-400 dark:text-slate-500"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-md shadow-fuchsia-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
+                <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-200">
+                  <span class="text-sm">🧭</span>
+                  <span>Vibe Quest</span>
+                </div>
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0 flex-1">
+                    <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                      Выполни это, используя Cursor!
+                    </div>
+                    <div class="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-50">
+                      <span id="questText" class="opacity-90">Нажми «Получить задачу»</span>
+                    </div>
+                  </div>
+                  <button id="questBtn" type="button" class="shrink-0 inline-flex items-center gap-1 rounded-2xl border border-fuchsia-500/40 bg-white/70 px-3 py-1.5 text-xs font-semibold text-fuchsia-700 shadow-sm transition hover:border-fuchsia-500 hover:bg-white active:scale-[0.99] dark:border-fuchsia-400/40 dark:bg-slate-900/80 dark:text-fuchsia-200 dark:hover:bg-slate-900">
+                    <span class="text-sm">🎯</span>
+                    <span>Получить задачу</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -108,6 +210,33 @@
       const inspoAuthor = document.getElementById("inspoAuthor");
       const inspoStatus = document.getElementById("inspoStatus");
       const inspoRefreshBtn = document.getElementById("inspoRefreshBtn");
+
+      const weatherIcon = document.getElementById("weatherIcon");
+      const weatherTemp = document.getElementById("weatherTemp");
+      const weatherCity = document.getElementById("weatherCity");
+      const weatherCode = document.getElementById("weatherCode");
+      const weatherStatus = document.getElementById("weatherStatus");
+      const weatherBtn = document.getElementById("weatherBtn");
+
+      const cryptoCard = document.getElementById("cryptoCard");
+      const cryptoPrice = document.getElementById("cryptoPrice");
+      const cryptoStatus = document.getElementById("cryptoStatus");
+      let lastBtcUsd = null;
+
+      const questBtn = document.getElementById("questBtn");
+      const questText = document.getElementById("questText");
+      const quests = [
+        "Сделай калькулятор калорий на JS (форма + расчёт + сохранение в localStorage).",
+        "Создай генератор паролей с настройками длины и набора символов.",
+        "Напиши мини‑игру «Угадай число» с подсказками и счётчиком попыток.",
+        "Собери To‑Do список с фильтрами: все/активные/выполненные и хранением в localStorage.",
+        "Сделай таймер Pomodoro с паузой, звуком и статистикой сессий.",
+        "Создай поиск по списку (live‑filter) с подсветкой совпадений.",
+        "Сверстай модальное окно с анимацией и закрытием по Esc/клику вне.",
+        "Сделай конвертер валют с вводом суммы и форматированием чисел.",
+        "Напиши маленький трекер привычек на неделю с отметками и прогрессом.",
+        "Собери мини‑галерею изображений с превью, полноэкранным просмотром и стрелками."
+      ];
 
       function pickRandomPhrase(exclude) {
         if (phrases.length <= 1) return phrases[0] ?? "";
@@ -189,6 +318,201 @@
 
       // загрузим цитату при первом открытии страницы
       fetchQuote();
+
+      function setWeatherUnavailable() {
+        if (weatherTemp) weatherTemp.textContent = "Погода недоступна";
+        if (weatherCity) weatherCity.textContent = "";
+        if (weatherCode) weatherCode.textContent = "";
+        if (weatherStatus)
+          weatherStatus.textContent = "Не удалось получить данные погоды.";
+      }
+
+      async function getWeather(lat, lon) {
+        if (!weatherTemp || !weatherCode) {
+          return;
+        }
+
+        if (weatherStatus) {
+          weatherStatus.textContent = "Запрашиваем погоду...";
+        }
+
+        try {
+          const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(
+            lat
+          )}&longitude=${encodeURIComponent(lon)}&current_weather=true`;
+          const res = await fetch(weatherUrl);
+
+          if (!res.ok) {
+            throw new Error("Weather request failed");
+          }
+
+          const data = await res.json();
+          const current = data && data.current_weather;
+
+          if (!current || typeof current.temperature !== "number") {
+            setWeatherUnavailable();
+            return;
+          }
+
+          const temperature = current.temperature;
+          const code = current.weathercode;
+
+          weatherTemp.textContent = `${Math.round(temperature)}°C`;
+          if (weatherCode) {
+            weatherCode.textContent =
+              typeof code === "number"
+                ? `Код погоды ${code}`
+                : "Код погоды —";
+          }
+
+          // пробуем определить город по координатам
+          if (weatherCity) {
+            try {
+              const geoUrl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${encodeURIComponent(
+                lat
+              )}&longitude=${encodeURIComponent(
+                lon
+              )}&language=ru&count=1`;
+              const geoRes = await fetch(geoUrl);
+              if (geoRes.ok) {
+                const geoData = await geoRes.json();
+                const result = geoData && geoData.results && geoData.results[0];
+                if (result && result.name) {
+                  const cityName = result.name;
+                  const country = result.country_code || "";
+                  weatherCity.textContent = country
+                    ? `${cityName}, ${country}`
+                    : cityName;
+                } else {
+                  weatherCity.textContent = "Ваше местоположение";
+                }
+              } else {
+                weatherCity.textContent = "Ваше местоположение";
+              }
+            } catch {
+              weatherCity.textContent = "Ваше местоположение";
+            }
+          }
+
+          if (weatherStatus) weatherStatus.textContent = "";
+        } catch (e) {
+          console.log("Ошибка при запросе погоды:", e);
+          setWeatherUnavailable();
+        }
+      }
+
+      function requestWeatherForCurrentLocation() {
+        console.log("Кнопка нажата, запрашиваю гео...");
+
+        if (!("geolocation" in navigator)) {
+          console.log("Доступ к геолокации отклонен");
+          setWeatherUnavailable();
+          return;
+        }
+
+        if (weatherStatus) {
+          weatherStatus.textContent = "Запрашиваем геолокацию...";
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log("Широта:", position.coords.latitude);
+            console.log("Долгота:", position.coords.longitude);
+            getWeather(position.coords.latitude, position.coords.longitude);
+          },
+          () => {
+            console.log("Доступ к геолокации отклонен");
+            setWeatherUnavailable();
+          }
+        );
+      }
+
+      if (weatherBtn) {
+        weatherBtn.addEventListener("click", requestWeatherForCurrentLocation);
+      }
+
+      function flashCryptoCard() {
+        if (!cryptoCard) return;
+        cryptoCard.classList.remove("card-flash");
+        void cryptoCard.offsetWidth;
+        cryptoCard.classList.add("card-flash");
+      }
+
+      function formatUsd(value) {
+        try {
+          return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 0
+          }).format(value);
+        } catch (_) {
+          return `$${Math.round(value).toLocaleString("en-US")}`;
+        }
+      }
+
+      async function fetchBtcPrice() {
+        if (!cryptoPrice) return;
+
+        if (cryptoStatus) cryptoStatus.textContent = "Обновляю...";
+
+        try {
+          const res = await fetch(
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+            { cache: "no-store" }
+          );
+          if (!res.ok) throw new Error("CoinGecko request failed");
+
+          const data = await res.json();
+          const usd = data && data.bitcoin && data.bitcoin.usd;
+
+          if (typeof usd !== "number") throw new Error("No BTC price");
+
+          cryptoPrice.textContent = `BTC: ${formatUsd(usd)}`;
+
+          const changed = lastBtcUsd !== null && usd !== lastBtcUsd;
+          lastBtcUsd = usd;
+          if (changed) flashCryptoCard();
+
+          if (cryptoStatus) {
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, "0");
+            const mm = String(now.getMinutes()).padStart(2, "0");
+            cryptoStatus.textContent = `Обновлено ${hh}:${mm}`;
+          }
+        } catch (e) {
+          console.log("Ошибка при получении цены BTC:", e);
+          cryptoPrice.textContent = "BTC: —";
+          if (cryptoStatus) cryptoStatus.textContent = "Недоступно";
+        }
+      }
+
+      fetchBtcPrice();
+      setInterval(fetchBtcPrice, 30000);
+
+      function pickRandomQuest(exclude) {
+        if (quests.length <= 1) return quests[0] ?? "";
+        let next = exclude;
+        while (next === exclude) {
+          next = quests[Math.floor(Math.random() * quests.length)];
+        }
+        return next;
+      }
+
+      function animateQuestText() {
+        if (prefersReducedMotion || !questText) return;
+        questText.classList.remove("quest-animate");
+        void questText.offsetWidth;
+        questText.classList.add("quest-animate");
+      }
+
+      if (questBtn && questText) {
+        questBtn.addEventListener("click", () => {
+          const current = questText.textContent?.trim() ?? "";
+          const next = pickRandomQuest(current);
+          questText.textContent = next;
+          animateQuestText();
+        });
+      }
     })();
   </script>
   <script src="./theme-loader.js"></script>
