@@ -11,510 +11,66 @@
         if (stored === "dark") {
           document.documentElement.classList.add("dark");
         }
-      } catch (e) {
-        // ignore
-      }
+      } catch (e) {}
     })();
   </script>
-  <title>My Vibe App — Home</title>
+  <title>Строительная Империя</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      darkMode: "class"
-    };
+    tailwind.config = { darkMode: "class" };
   </script>
   <style>
-    body {
-      font-family: 'Inter', Arial, Helvetica, sans-serif;
-    }
-
-    @keyframes popFadeIn {
-      0% { opacity: 0; transform: translateY(10px) scale(0.96); filter: blur(2px); }
-      60% { opacity: 1; transform: translateY(0) scale(1.02); filter: blur(0); }
-      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-    }
-
-    .btn-text-animate {
+    body { font-family: 'Inter', Arial, Helvetica, sans-serif; }
+    kbd {
       display: inline-block;
-      animation: popFadeIn 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
-      will-change: transform, opacity, filter;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: rgba(100, 116, 139, 0.15);
+      border: 1px solid rgba(100, 116, 139, 0.3);
+      font-family: monospace;
+      font-size: 0.8em;
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      .btn-text-animate { animation: none; }
-    }
-
-    @keyframes cardFlash {
-      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
-      35% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.18); }
-      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
-
-    .card-flash {
-      animation: cardFlash 520ms ease-out;
-      will-change: box-shadow;
-    }
-
-    .quest-animate {
-      display: inline-block;
-      animation: popFadeIn 520ms cubic-bezier(0.2, 0.9, 0.2, 1);
-      will-change: transform, opacity, filter;
-    }
+    #tabs-rail::-webkit-scrollbar { height: 4px; }
+    #tabs-rail::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.3); border-radius: 4px; }
+    [hidden] { display: none !important; }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-indigo-200 via-sky-100 to-purple-200 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 dark:text-slate-100" data-page="home">
+<body class="min-h-screen bg-gradient-to-br from-amber-100 via-orange-50 to-rose-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-amber-950 dark:text-slate-100" data-page="game">
   <div id="nav-placeholder"></div>
+  <div id="topbar"></div>
 
-  <main class="mx-auto flex max-w-5xl flex-col items-center px-5 py-14">
-    <section class="w-full rounded-3xl border border-white/30 bg-white/60 p-10 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
-      <div class="flex flex-col items-center text-center">
-        <div class="mb-4 text-5xl">🚀</div>
-        <h1 class="text-4xl font-black tracking-tight sm:text-5xl">Главная</h1>
-        <p class="mt-4 max-w-2xl text-base text-slate-700 dark:text-slate-200/80 sm:text-lg">
-          Это мини‑сайт на Tailwind CSS. Нажми кнопку ниже — и вдохновляйся программированием.
-        </p>
+  <main class="mx-auto max-w-6xl px-5 py-6">
+    <nav id="tabs-rail" class="mb-5 flex gap-1 overflow-x-auto rounded-2xl border border-white/30 bg-white/60 p-1 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/60">
+      <button data-tab="dashboard" class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">📊 Дашборд</button>
+      <button data-tab="tenders"   class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">📝 Тендеры</button>
+      <button data-tab="projects"  class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🏗️ Проекты</button>
+      <button data-tab="hr"        class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">👷 Персонал</button>
+      <button data-tab="fleet"     class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🚜 Техника</button>
+      <button data-tab="materials" class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🧱 Материалы</button>
+      <button data-tab="finance"   class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">💰 Финансы</button>
+      <button data-tab="rd"        class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🔬 R&D</button>
+      <button data-tab="map"       class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🗺️ Карта</button>
+      <button data-tab="settings"  class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">⚙️ Настройки</button>
+    </nav>
 
-        <section class="mt-8 w-full max-w-3xl text-left">
-          <div class="grid gap-4 md:grid-cols-2">
-            <div class="rounded-3xl border border-white/40 bg-white/70 p-5 text-left shadow-md shadow-indigo-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
-              <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-200">
-                <span class="text-sm">✨</span>
-                <span>Вдохновение дня</span>
-              </div>
-              <p id="inspoText" class="text-base italic text-slate-800 dark:text-slate-100">
-                Загружаем свежую цитату...
-              </p>
-              <p id="inspoAuthor" class="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400"></p>
-              <div class="mt-4 flex items-center justify-between gap-3">
-                <span id="inspoStatus" class="text-xs text-slate-400 dark:text-slate-500"></span>
-                <button id="inspoRefreshBtn" type="button" class="inline-flex items-center gap-1 rounded-2xl border border-indigo-500/30 bg-white/70 px-3 py-1.5 text-xs font-semibold text-indigo-700 shadow-sm transition hover:border-indigo-500 hover:bg-white dark:border-indigo-400/40 dark:bg-slate-900/80 dark:text-indigo-200 dark:hover:bg-slate-900">
-                  <span class="text-sm">🔄</span>
-                  <span>Обновить цитату</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="grid gap-4">
-              <div class="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-md shadow-sky-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
-                <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-sky-700 dark:bg-sky-500/15 dark:text-sky-200">
-                  <span class="text-sm">☁️</span>
-                  <span>Weather widget</span>
-                </div>
-                <div class="flex items-center justify-between gap-3">
-                  <div class="flex items-center gap-3">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-500 text-2xl text-white dark:from-sky-500 dark:to-indigo-600">
-                      <!-- Иконка погоды -->
-                      <span id="weatherIcon">⛅</span>
-                    </div>
-                    <div>
-                      <div class="text-2xl font-bold text-slate-900 dark:text-slate-50">
-                        <!-- Температура -->
-                        <span id="weatherTemp">—°C</span>
-                      </div>
-                      <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                        Сейчас за окном
-                      </div>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-sm font-semibold text-slate-800 dark:text-slate-100">
-                      <!-- Город -->
-                      <span id="weatherCity">Город</span>
-                    </div>
-                    <div class="text-xs text-slate-500 dark:text-slate-400">
-                      <span id="weatherCode">Код погоды —</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-4 flex items-center justify-between gap-3">
-                  <span id="weatherStatus" class="text-xs text-slate-400 dark:text-slate-500"></span>
-                  <button id="weatherBtn" type="button" class="inline-flex items-center gap-1 rounded-2xl border border-sky-500/40 bg-white/70 px-3 py-1.5 text-xs font-semibold text-sky-700 shadow-sm transition hover:border-sky-500 hover:bg-white dark:border-sky-400/40 dark:bg-slate-900/80 dark:text-sky-200 dark:hover:bg-slate-900">
-                    <span class="text-sm">📍</span>
-                    <span>Узнать погоду</span>
-                  </button>
-                </div>
-              </div>
-
-              <div id="cryptoCard" class="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-md shadow-emerald-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
-                <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200">
-                  <span class="text-sm">₿</span>
-                  <span>Crypto tracker</span>
-                </div>
-                <div class="flex items-end justify-between gap-3">
-                  <div>
-                    <div id="cryptoPrice" class="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-50">
-                      BTC: —
-                    </div>
-                    <div class="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                      Обновление каждые 30 секунд
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <div id="cryptoStatus" class="text-xs text-slate-400 dark:text-slate-500"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-md shadow-fuchsia-500/10 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
-                <div class="mb-3 inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-fuchsia-700 dark:bg-fuchsia-500/15 dark:text-fuchsia-200">
-                  <span class="text-sm">🧭</span>
-                  <span>Vibe Quest</span>
-                </div>
-                <div class="flex items-start justify-between gap-3">
-                  <div class="min-w-0 flex-1">
-                    <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                      Выполни это, используя Cursor!
-                    </div>
-                    <div class="mt-2 text-lg font-semibold text-slate-900 dark:text-slate-50">
-                      <span id="questText" class="opacity-90">Нажми «Получить задачу»</span>
-                    </div>
-                  </div>
-                  <button id="questBtn" type="button" class="shrink-0 inline-flex items-center gap-1 rounded-2xl border border-fuchsia-500/40 bg-white/70 px-3 py-1.5 text-xs font-semibold text-fuchsia-700 shadow-sm transition hover:border-fuchsia-500 hover:bg-white active:scale-[0.99] dark:border-fuchsia-400/40 dark:bg-slate-900/80 dark:text-fuchsia-200 dark:hover:bg-slate-900">
-                    <span class="text-sm">🎯</span>
-                    <span>Получить задачу</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="mt-8">
-          <button id="learnMoreBtn" class="group inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:from-purple-700 hover:to-indigo-500 active:scale-[0.99] dark:shadow-purple-900/30">
-            <span id="learnMoreText">Узнать больше</span>
-          </button>
-        </div>
-      </div>
-    </section>
+    <section data-tab-panel="dashboard" hidden></section>
+    <section data-tab-panel="tenders"   hidden></section>
+    <section data-tab-panel="projects"  hidden></section>
+    <section data-tab-panel="hr"        hidden></section>
+    <section data-tab-panel="fleet"     hidden></section>
+    <section data-tab-panel="materials" hidden></section>
+    <section data-tab-panel="finance"   hidden></section>
+    <section data-tab-panel="rd"        hidden></section>
+    <section data-tab-panel="map"       hidden></section>
+    <section data-tab-panel="settings"  hidden></section>
   </main>
 
-  <script>
-    (function () {
-      const phrases = [
-        "Пиши код — и он начнёт писать твою историю.",
-        "Маленькие коммиты ведут к большим победам.",
-        "Ошибки — это фичи на пути к мастерству.",
-        "Сначала работает — потом красиво. Но сделай и то, и другое.",
-        "Сегодня рефакторинг — завтра скорость и ясность.",
-        "Каждая строка кода приближает к версии 1.0."
-      ];
+  <div id="modal-root" class="hidden"></div>
 
-      const btn = document.getElementById("learnMoreBtn");
-      const textEl = document.getElementById("learnMoreText");
-      const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-
-      const inspoText = document.getElementById("inspoText");
-      const inspoAuthor = document.getElementById("inspoAuthor");
-      const inspoStatus = document.getElementById("inspoStatus");
-      const inspoRefreshBtn = document.getElementById("inspoRefreshBtn");
-
-      const weatherIcon = document.getElementById("weatherIcon");
-      const weatherTemp = document.getElementById("weatherTemp");
-      const weatherCity = document.getElementById("weatherCity");
-      const weatherCode = document.getElementById("weatherCode");
-      const weatherStatus = document.getElementById("weatherStatus");
-      const weatherBtn = document.getElementById("weatherBtn");
-
-      const cryptoCard = document.getElementById("cryptoCard");
-      const cryptoPrice = document.getElementById("cryptoPrice");
-      const cryptoStatus = document.getElementById("cryptoStatus");
-      let lastBtcUsd = null;
-
-      const questBtn = document.getElementById("questBtn");
-      const questText = document.getElementById("questText");
-      const quests = [
-        "Сделай калькулятор калорий на JS (форма + расчёт + сохранение в localStorage).",
-        "Создай генератор паролей с настройками длины и набора символов.",
-        "Напиши мини‑игру «Угадай число» с подсказками и счётчиком попыток.",
-        "Собери To‑Do список с фильтрами: все/активные/выполненные и хранением в localStorage.",
-        "Сделай таймер Pomodoro с паузой, звуком и статистикой сессий.",
-        "Создай поиск по списку (live‑filter) с подсветкой совпадений.",
-        "Сверстай модальное окно с анимацией и закрытием по Esc/клику вне.",
-        "Сделай конвертер валют с вводом суммы и форматированием чисел.",
-        "Напиши маленький трекер привычек на неделю с отметками и прогрессом.",
-        "Собери мини‑галерею изображений с превью, полноэкранным просмотром и стрелками."
-      ];
-
-      function pickRandomPhrase(exclude) {
-        if (phrases.length <= 1) return phrases[0] ?? "";
-        let next = exclude;
-        while (next === exclude) {
-          next = phrases[Math.floor(Math.random() * phrases.length)];
-        }
-        return next;
-      }
-
-      function animateText() {
-        if (prefersReducedMotion || !textEl) return;
-        textEl.classList.remove("btn-text-animate");
-        void textEl.offsetWidth;
-        textEl.classList.add("btn-text-animate");
-      }
-
-      async function fetchQuote() {
-        if (!inspoText) return;
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        const fallback =
-          "Программирование — это не то, что ты знаешь, а то, что ты можешь выяснить";
-
-        if (inspoStatus) {
-          inspoStatus.textContent = "Обновляем цитату...";
-        }
-        if (inspoRefreshBtn) {
-          inspoRefreshBtn.disabled = true;
-          inspoRefreshBtn.classList.add("opacity-60", "cursor-not-allowed");
-        }
-
-        try {
-          const timeoutId = setTimeout(() => controller.abort(), 8000);
-          const res = await fetch("https://api.adviceslip.com/advice", {
-            signal,
-            cache: "no-cache"
-          });
-          clearTimeout(timeoutId);
-
-          if (!res.ok) {
-            throw new Error("Failed to load advice");
-          }
-
-          const data = await res.json();
-          const content =
-            (data && data.slip && data.slip.advice) || fallback;
-
-          inspoText.textContent = `“${content}”`;
-          if (inspoAuthor) {
-            inspoAuthor.textContent = "";
-          }
-          if (inspoStatus) inspoStatus.textContent = "";
-        } catch (e) {
-          inspoText.textContent = `“${fallback}”`;
-          if (inspoAuthor) inspoAuthor.textContent = "";
-          if (inspoStatus) inspoStatus.textContent = "Не удалось загрузить цитату из сети.";
-        } finally {
-          if (inspoRefreshBtn) {
-            inspoRefreshBtn.disabled = false;
-            inspoRefreshBtn.classList.remove("opacity-60", "cursor-not-allowed");
-          }
-        }
-      }
-
-      btn?.addEventListener("click", () => {
-        const current = textEl?.textContent?.trim() ?? "";
-        const next = pickRandomPhrase(current);
-        if (textEl) textEl.textContent = next;
-        animateText();
-      });
-
-      if (inspoRefreshBtn) {
-        inspoRefreshBtn.addEventListener("click", () => {
-          fetchQuote();
-        });
-      }
-
-      // загрузим цитату при первом открытии страницы
-      fetchQuote();
-
-      function setWeatherUnavailable() {
-        if (weatherTemp) weatherTemp.textContent = "Погода недоступна";
-        if (weatherCity) weatherCity.textContent = "";
-        if (weatherCode) weatherCode.textContent = "";
-        if (weatherStatus)
-          weatherStatus.textContent = "Не удалось получить данные погоды.";
-      }
-
-      async function getWeather(lat, lon) {
-        if (!weatherTemp || !weatherCode) {
-          return;
-        }
-
-        if (weatherStatus) {
-          weatherStatus.textContent = "Запрашиваем погоду...";
-        }
-
-        try {
-          const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(
-            lat
-          )}&longitude=${encodeURIComponent(lon)}&current_weather=true`;
-          const res = await fetch(weatherUrl);
-
-          if (!res.ok) {
-            throw new Error("Weather request failed");
-          }
-
-          const data = await res.json();
-          const current = data && data.current_weather;
-
-          if (!current || typeof current.temperature !== "number") {
-            setWeatherUnavailable();
-            return;
-          }
-
-          const temperature = current.temperature;
-          const code = current.weathercode;
-
-          weatherTemp.textContent = `${Math.round(temperature)}°C`;
-          if (weatherCode) {
-            weatherCode.textContent =
-              typeof code === "number"
-                ? `Код погоды ${code}`
-                : "Код погоды —";
-          }
-
-          // пробуем определить город по координатам
-          if (weatherCity) {
-            try {
-              const geoUrl = `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${encodeURIComponent(
-                lat
-              )}&longitude=${encodeURIComponent(
-                lon
-              )}&language=ru&count=1`;
-              const geoRes = await fetch(geoUrl);
-              if (geoRes.ok) {
-                const geoData = await geoRes.json();
-                const result = geoData && geoData.results && geoData.results[0];
-                if (result && result.name) {
-                  const cityName = result.name;
-                  const country = result.country_code || "";
-                  weatherCity.textContent = country
-                    ? `${cityName}, ${country}`
-                    : cityName;
-                } else {
-                  weatherCity.textContent = "Ваше местоположение";
-                }
-              } else {
-                weatherCity.textContent = "Ваше местоположение";
-              }
-            } catch {
-              weatherCity.textContent = "Ваше местоположение";
-            }
-          }
-
-          if (weatherStatus) weatherStatus.textContent = "";
-        } catch (e) {
-          console.log("Ошибка при запросе погоды:", e);
-          setWeatherUnavailable();
-        }
-      }
-
-      function requestWeatherForCurrentLocation() {
-        console.log("Кнопка нажата, запрашиваю гео...");
-
-        if (!("geolocation" in navigator)) {
-          console.log("Доступ к геолокации отклонен");
-          setWeatherUnavailable();
-          return;
-        }
-
-        if (weatherStatus) {
-          weatherStatus.textContent = "Запрашиваем геолокацию...";
-        }
-
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            console.log("Широта:", position.coords.latitude);
-            console.log("Долгота:", position.coords.longitude);
-            getWeather(position.coords.latitude, position.coords.longitude);
-          },
-          () => {
-            console.log("Доступ к геолокации отклонен");
-            setWeatherUnavailable();
-          }
-        );
-      }
-
-      if (weatherBtn) {
-        weatherBtn.addEventListener("click", requestWeatherForCurrentLocation);
-      }
-
-      function flashCryptoCard() {
-        if (!cryptoCard) return;
-        cryptoCard.classList.remove("card-flash");
-        void cryptoCard.offsetWidth;
-        cryptoCard.classList.add("card-flash");
-      }
-
-      function formatUsd(value) {
-        try {
-          return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 0
-          }).format(value);
-        } catch (_) {
-          return `$${Math.round(value).toLocaleString("en-US")}`;
-        }
-      }
-
-      async function fetchBtcPrice() {
-        if (!cryptoPrice) return;
-
-        if (cryptoStatus) cryptoStatus.textContent = "Обновляю...";
-
-        try {
-          const res = await fetch(
-            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
-            { cache: "no-store" }
-          );
-          if (!res.ok) throw new Error("CoinGecko request failed");
-
-          const data = await res.json();
-          const usd = data && data.bitcoin && data.bitcoin.usd;
-
-          if (typeof usd !== "number") throw new Error("No BTC price");
-
-          cryptoPrice.textContent = `BTC: ${formatUsd(usd)}`;
-
-          const changed = lastBtcUsd !== null && usd !== lastBtcUsd;
-          lastBtcUsd = usd;
-          if (changed) flashCryptoCard();
-
-          if (cryptoStatus) {
-            const now = new Date();
-            const hh = String(now.getHours()).padStart(2, "0");
-            const mm = String(now.getMinutes()).padStart(2, "0");
-            cryptoStatus.textContent = `Обновлено ${hh}:${mm}`;
-          }
-        } catch (e) {
-          console.log("Ошибка при получении цены BTC:", e);
-          cryptoPrice.textContent = "BTC: —";
-          if (cryptoStatus) cryptoStatus.textContent = "Недоступно";
-        }
-      }
-
-      fetchBtcPrice();
-      setInterval(fetchBtcPrice, 30000);
-
-      function pickRandomQuest(exclude) {
-        if (quests.length <= 1) return quests[0] ?? "";
-        let next = exclude;
-        while (next === exclude) {
-          next = quests[Math.floor(Math.random() * quests.length)];
-        }
-        return next;
-      }
-
-      function animateQuestText() {
-        if (prefersReducedMotion || !questText) return;
-        questText.classList.remove("quest-animate");
-        void questText.offsetWidth;
-        questText.classList.add("quest-animate");
-      }
-
-      if (questBtn && questText) {
-        questBtn.addEventListener("click", () => {
-          const current = questText.textContent?.trim() ?? "";
-          const next = pickRandomQuest(current);
-          questText.textContent = next;
-          animateQuestText();
-        });
-      }
-    })();
-  </script>
   <script src="./theme-loader.js"></script>
+  <script type="module" src="./game/main.js"></script>
 </body>
 </html>
