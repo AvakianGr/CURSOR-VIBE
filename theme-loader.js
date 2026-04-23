@@ -47,6 +47,7 @@
     const page = document.body.dataset.page || "";
     const isHome = page === "home";
     const isAbout = page === "about";
+    const isGame = page === "game";
 
     const homeClassesActive =
       "rounded-lg bg-white/70 px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm hover:bg-white/80 dark:bg-white/10 dark:text-white dark:hover:bg-white/15";
@@ -55,9 +56,12 @@
 
     const aboutClassesActive = homeClassesActive;
     const aboutClassesInactive = homeClassesInactive;
+    const gameClassesActive = homeClassesActive;
+    const gameClassesInactive = homeClassesInactive;
 
     const homeAttrs = isHome ? ' aria-current="page"' : "";
     const aboutAttrs = isAbout ? ' aria-current="page"' : "";
+    const gameAttrs = isGame ? ' aria-current="page"' : "";
 
     placeholder.innerHTML = `
       <header class="sticky top-0 z-10 border-b border-white/20 bg-white/50 backdrop-blur-xl dark:bg-slate-950/40 dark:border-white/10">
@@ -72,6 +76,9 @@
             </a>
             <a href="./about.html"${aboutAttrs} class="${isAbout ? aboutClassesActive : aboutClassesInactive}">
               About
+            </a>
+            <a href="./game.html"${gameAttrs} class="${isGame ? gameClassesActive : gameClassesInactive}">
+              Игра
             </a>
             <button id="themeToggle" type="button" class="ml-2 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/30 bg-white/60 shadow-sm transition hover:bg-white/80 active:scale-[0.98] dark:bg-white/10 dark:hover:bg-white/15 dark:border-white/10" aria-label="Переключить тему" title="Переключить тему">
               <span class="text-lg leading-none">🌓</span>

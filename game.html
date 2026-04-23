@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("vibe-theme");
+        if (stored === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <title>Строительная Империя — Игра</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: "class" };
+  </script>
+  <style>
+    body { font-family: 'Inter', Arial, Helvetica, sans-serif; }
+    kbd {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: rgba(100, 116, 139, 0.15);
+      border: 1px solid rgba(100, 116, 139, 0.3);
+      font-family: monospace;
+      font-size: 0.8em;
+    }
+    #tabs-rail::-webkit-scrollbar { height: 4px; }
+    #tabs-rail::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.3); border-radius: 4px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-amber-100 via-orange-50 to-rose-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-amber-950 dark:text-slate-100" data-page="game">
+  <div id="nav-placeholder"></div>
+  <div id="topbar"></div>
+
+  <main class="mx-auto max-w-6xl px-5 py-6">
+    <nav id="tabs-rail" class="mb-5 flex gap-1 overflow-x-auto rounded-2xl border border-white/30 bg-white/60 p-1 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/60">
+      <button data-tab="dashboard" class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">📊 Дашборд</button>
+      <button data-tab="tenders"   class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">📝 Тендеры</button>
+      <button data-tab="projects"  class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🏗️ Проекты</button>
+      <button data-tab="hr"        class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">👷 Персонал</button>
+      <button data-tab="fleet"     class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🚜 Техника</button>
+      <button data-tab="materials" class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🧱 Материалы</button>
+      <button data-tab="finance"   class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">💰 Финансы</button>
+      <button data-tab="rd"        class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🔬 R&D</button>
+      <button data-tab="map"       class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">🗺️ Карта</button>
+      <button data-tab="settings"  class="whitespace-nowrap rounded-xl px-3 py-2 text-sm font-semibold transition hover:bg-white/70 dark:hover:bg-white/10">⚙️ Настройки</button>
+    </nav>
+
+    <section data-tab-panel="dashboard" hidden></section>
+    <section data-tab-panel="tenders"   hidden></section>
+    <section data-tab-panel="projects"  hidden></section>
+    <section data-tab-panel="hr"        hidden></section>
+    <section data-tab-panel="fleet"     hidden></section>
+    <section data-tab-panel="materials" hidden></section>
+    <section data-tab-panel="finance"   hidden></section>
+    <section data-tab-panel="rd"        hidden></section>
+    <section data-tab-panel="map"       hidden></section>
+    <section data-tab-panel="settings"  hidden></section>
+  </main>
+
+  <div id="modal-root" class="hidden"></div>
+
+  <script src="./theme-loader.js"></script>
+  <script type="module" src="./game/main.js"></script>
+</body>
+</html>
